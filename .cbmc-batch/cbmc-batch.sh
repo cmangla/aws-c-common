@@ -51,8 +51,15 @@ if [ "$opt" = "--start" ]; then
                 --no-coverage \
                 --wsdir jobs/"$job" \
                 --srcdir ../ \
-                --jobprefix $job-local \
-                --yaml jobs/$job/cbmc-batch.yaml
+                --jobprefix "$job"-local \
+                --yaml jobs/"$job"/cbmc-batch.yaml \
+                --srcbucket s3://com.aws.cbmc/aws-c-common/srcbucket \
+                --wsbucket s3://com.aws.cbmc/aws-c-common/wsbucket/"$job" \
+                --outbucket s3://com.aws.cbmc/aws-c-common/outbucket/"$job" \
+                --pkgbucket s3://com.aws.cbmc/batch-cbmc/package \
+                --cbmcpkg cbmc-ubuntu16.tar.gz \
+                --batchpkg cbmc-batch.tar.gz \
+                --viewerpkg cbmc-viewer.tar.gz
     done
 # Check CBMC Batch Job Results
 elif [ "$opt" = "--end" ]; then
